@@ -22,6 +22,28 @@
     a:hover { color: #101828; }
     button { font-family: inherit; cursor: pointer; }
     :focus-visible { outline: 2px solid #F72330; outline-offset: 3px; }
+    @media (max-width: 640px) {
+      .treatment-card { text-align: center; }
+      .treatment-card img { margin-left: auto; margin-right: auto; }
+      .clinic-gallery { grid-template-columns:1fr !important; }
+      .clinic-gallery image-slot { height:280px !important; }
+      .testimonials-track { gap:16px !important; padding-left:0 !important; padding-right:0 !important; }
+      .testimonial-card { flex-basis:100% !important; scroll-snap-align:center !important; }
+      .location-info { text-align:center; }
+      .location-info > div:first-child { margin-left:auto; margin-right:auto; }
+      .location-actions { justify-content:center; }
+      .footer-columns { text-align:center; justify-content:center !important; }
+      .footer-columns > div { flex-basis:100% !important; }
+      .footer-logo { margin-left:auto; margin-right:auto; }
+      .footer-bottom { justify-content:center !important; text-align:center; }
+      .footer-bottom > p { max-width:none !important; width:100%; }
+      .footer-bottom > div { width:100%; text-align:center !important; }
+      .hero-bg-layer { left:-250px !important; right:0 !important; width:calc(100% + 250px) !important; }
+      .hero-copy { max-width:60vw !important; text-align:left; }
+      .hero-copy a { max-width:100%; justify-content:center; padding:14px 18px !important; font-size:14px !important; }
+      .hero-copy img { max-width:100%; height:30px !important; }
+      .process-section { background-position:center,right center !important; }
+    }
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
     }
@@ -82,12 +104,12 @@
 
 <!-- HERO -->
 <section aria-label="Início" style="position:relative;min-height:clamp(600px,86vh,780px);display:flex;align-items:center;">
-  <div style="position:absolute;inset:0;z-index:0;">
+  <div class="hero-bg-layer" style="position:absolute;inset:0;z-index:0;">
     <image-slot id="hero-bg" shape="rect" src="assets/hero-institucional.webp" placeholder="Imagem do hero — substituir por assets/hero-clinica.webp" style="width:100%;height:100%;"></image-slot>
   </div>
   <div style="position:absolute;inset:0;z-index:1;background:linear-gradient(105deg, rgba(16,24,40,0.94) 0%, rgba(16,24,40,0.82) 42%, rgba(16,24,40,0.45) 75%, rgba(16,24,40,0.2) 100%);pointer-events:none;"></div>
   <div style="{{ revealHero }}position:relative;z-index:2;width:100%;max-width:1200px;margin:0 auto;padding:72px clamp(20px,5vw,56px);">
-    <div style="max-width:min(560px,88vw);">
+    <div class="hero-copy" style="max-width:min(560px,88vw);">
       <div style="background:#FFFFFF;display:inline-block;padding:10px 16px;border-radius:6px;margin-bottom:32px;"><img src="assets/logo-odonto-excellence.png" alt="Odonto Excellence" style="height:36px;width:auto;display:block;"></div>
       <p style="color:#F72330;font-size:13px;letter-spacing:0.14em;text-transform:uppercase;font-weight:600;margin:0 0 14px;">Odontologia completa em Cascavel</p>
       <h1 style="font-family:'Mulish',sans-serif;color:#FFFFFF;font-size:clamp(1.7rem,3.4vw,2.6rem);line-height:1.12;font-weight:800;letter-spacing:-0.01em;margin:0 0 22px;">Cuidado completo para o seu sorriso</h1>
@@ -102,12 +124,16 @@
 </section>
 
 <!-- SEÇÃO 2 — CREDIBILIDADE -->
-<section aria-label="Informações rápidas" style="background:#F72330;padding:40px clamp(20px,5vw,56px);">
-  <div style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:24px 28px;">
+<section aria-label="Informações rápidas" style="position:relative;overflow:hidden;background:linear-gradient(135deg,#F72330 0%,#D91522 48%,#101828 135%);padding:34px clamp(20px,5vw,56px);">
+  <div aria-hidden="true" style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(255,255,255,0.18) 0%,transparent 28%,transparent 72%,rgba(16,24,40,0.18) 100%);pointer-events:none;"></div>
+  <div style="position:relative;max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;">
     <sc-for list="{{ infoItems }}" as="item" hint-placeholder-count="3">
-      <div style="display:flex;align-items:flex-start;gap:12px;">
-        <span style="flex:0 0 auto;color:#FFFFFF;margin-top:2px;">{{ item.icon }}</span>
-        <span style="color:#FFFFFF;font-size:17px;line-height:1.35;font-weight:600;">{{ item.label }}</span>
+      <div style="display:flex;align-items:center;gap:16px;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.22);border-radius:8px;padding:18px 20px;box-shadow:0 18px 40px rgba(16,24,40,0.12);" style-hover="background:rgba(255,255,255,0.16);transform:translateY(-2px);">
+        <span style="width:46px;height:46px;border-radius:50%;background:rgba(255,255,255,0.16);display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto;color:#FFFFFF;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.18);">{{ item.icon }}</span>
+        <span style="display:block;">
+          <span style="display:block;color:#FFFFFF;font-size:17px;line-height:1.25;font-weight:700;">{{ item.label }}</span>
+          <span style="display:block;color:rgba(255,255,255,0.76);font-size:13px;line-height:1.5;margin-top:4px;">{{ item.desc }}</span>
+        </span>
       </div>
     </sc-for>
   </div>
@@ -125,7 +151,7 @@
       <p style="font-family:'Newsreader',serif;color:#101828;font-size:20px;line-height:1.5;font-style:italic;margin:0;border-left:2px solid #F72330;padding-left:20px;">Cada sorriso possui necessidades diferentes — e o planejamento também deve ser individual.</p>
     </div>
     <div style="flex:1 1 min(440px,100%);min-width:min(300px,100%);">
-      <image-slot id="atendimento-01" shape="rounded" radius="4" placeholder="Foto do atendimento — assets/clinica-atendimento.webp" style="width:100%;height:min(480px,70vw);"></image-slot>
+      <image-slot id="atendimento-01" shape="rounded" radius="4" src="assets/sobre.jpg" placeholder="Foto do atendimento — assets/sobre.jpg" style="width:100%;height:min(480px,70vw);"></image-slot>
     </div>
   </div>
 </section>
@@ -140,8 +166,8 @@
     </div>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:2px;background:#EDEDEE;">
       <sc-for list="{{ treatments }}" as="t" hint-placeholder-count="12">
-        <article style="background:#FFFFFF;padding:32px 28px;" style-hover="background:#FAFAFB;">
-          <div style="width:32px;height:2px;background:#F72330;margin-bottom:18px;"></div>
+        <article class="treatment-card" style="background:#FFFFFF;padding:32px 28px;" style-hover="background:#FAFAFB;">
+          <img src="{{ t.icon }}" alt="" aria-hidden="true" style="display:block;width:34px;height:34px;object-fit:contain;margin-bottom:18px;filter:brightness(0) saturate(100%) invert(24%) sepia(95%) saturate(4942%) hue-rotate(345deg) brightness(101%) contrast(94%);">
           <h3 style="font-family:'Mulish',sans-serif;color:#101828;font-size:19px;line-height:1.15;font-weight:800;margin:0 0 10px;">{{ t.title }}</h3>
           <p style="color:#5a6270;font-size:14px;line-height:1.6;margin:0;">{{ t.desc }}</p>
         </article>
@@ -157,20 +183,22 @@
 </section>
 
 <!-- SEÇÃO 5 — COMO FUNCIONA -->
-<section aria-label="Como funciona a avaliação" ref="{{ refProcess }}" style="{{ revealProcess }}background:#101828;padding:100px clamp(20px,5vw,56px);">
+<section class="process-section" aria-label="Como funciona a avaliação" ref="{{ refProcess }}" style="{{ revealProcess }}background-image:linear-gradient(90deg,rgba(16,24,40,0.72) 0%,rgba(16,24,40,0.62) 48%,rgba(16,24,40,0.38) 100%),url('assets/etapas.webp');background-size:cover,cover;background-position:center,center;background-repeat:no-repeat,no-repeat;background-attachment:fixed,fixed;padding:100px clamp(20px,5vw,56px);">
   <div style="max-width:1200px;margin:0 auto;">
     <div style="max-width:640px;margin:0 0 64px;">
       <div style="width:40px;height:2px;background:#F72330;margin-bottom:20px;"></div>
       <h2 style="font-family:'Mulish',sans-serif;color:#FFFFFF;font-size:clamp(1.8rem,3vw,2.5rem);line-height:1.08;font-weight:800;letter-spacing:-0.01em;margin:0;">Antes de indicar um tratamento, é preciso entender o seu caso</h2>
     </div>
-    <div style="display:flex;flex-wrap:wrap;gap:48px;">
-      <sc-for list="{{ steps }}" as="s" hint-placeholder-count="3">
-        <div style="flex:1 1 260px;min-width:240px;border-top:2px solid #F72330;padding-top:24px;">
-          <span style="font-family:'Newsreader',serif;color:#F72330;font-size:15px;font-weight:500;letter-spacing:0.05em;">{{ s.num }}</span>
-          <h3 style="font-family:'Mulish',sans-serif;color:#FFFFFF;font-size:21px;line-height:1.15;font-weight:800;margin:14px 0 12px;">{{ s.title }}</h3>
+    <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:64px;">
+      <div style="display:flex;flex-direction:column;gap:34px;">
+        <sc-for list="{{ steps }}" as="s" hint-placeholder-count="3">
+        <div>
+          <h3 style="font-family:'Mulish',sans-serif;color:#FFFFFF;font-size:21px;line-height:1.15;font-weight:800;margin:0 0 12px;"><span style="font-family:'Newsreader',serif;color:#F72330;font-size:15px;font-weight:500;letter-spacing:0.05em;margin-right:12px;vertical-align:baseline;">{{ s.num }}</span>{{ s.title }}</h3>
           <p style="color:rgba(255,255,255,0.72);font-size:15px;line-height:1.7;margin:0;">{{ s.desc }}</p>
         </div>
-      </sc-for>
+        </sc-for>
+      </div>
+      <div aria-hidden="true"></div>
     </div>
   </div>
 </section>
@@ -183,11 +211,11 @@
       <h2 style="font-family:'Mulish',sans-serif;color:#101828;font-size:clamp(1.8rem,3vw,2.5rem);line-height:1.08;font-weight:800;letter-spacing:-0.01em;margin:0 0 18px;">Conheça a Odonto Excellence Santa Cruz</h2>
       <p style="color:#3d4552;font-size:16px;line-height:1.7;margin:0;">Um ambiente preparado para receber você com conforto, cuidado e atenção em cada etapa do atendimento.</p>
     </div>
-    <div style="column-count:2;column-gap:20px;">
-      <div style="break-inside:avoid;margin-bottom:20px;"><image-slot id="clinica-01" shape="rounded" radius="4" placeholder="Foto da clínica — assets/clinica-01.webp" style="width:100%;height:300px;"></image-slot></div>
-      <div style="break-inside:avoid;margin-bottom:20px;"><image-slot id="clinica-02" shape="rounded" radius="4" placeholder="Foto da clínica — assets/clinica-02.webp" style="width:100%;height:400px;"></image-slot></div>
-      <div style="break-inside:avoid;margin-bottom:20px;"><image-slot id="clinica-03" shape="rounded" radius="4" placeholder="Foto da clínica — assets/clinica-03.webp" style="width:100%;height:360px;"></image-slot></div>
-      <div style="break-inside:avoid;margin-bottom:20px;"><image-slot id="clinica-04" shape="rounded" radius="4" placeholder="Foto da clínica — assets/clinica-04.webp" style="width:100%;height:260px;"></image-slot></div>
+    <div class="clinic-gallery" style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px;">
+      <image-slot id="clinica-01" shape="rounded" radius="4" src="assets/clinica1.webp" placeholder="Foto da clínica — assets/clinica1.webp" style="width:100%;height:300px;"></image-slot>
+      <image-slot id="clinica-02" shape="rounded" radius="4" src="assets/clinica2.webp" placeholder="Foto da clínica — assets/clinica2.webp" style="width:100%;height:300px;"></image-slot>
+      <image-slot id="clinica-03" shape="rounded" radius="4" src="assets/clinica3.webp" placeholder="Foto da clínica — assets/clinica3.webp" style="width:100%;height:300px;"></image-slot>
+      <image-slot id="clinica-04" shape="rounded" radius="4" src="assets/clinica4.webp" placeholder="Foto da clínica — assets/clinica4.webp" style="width:100%;height:300px;"></image-slot>
     </div>
   </div>
 </section>
@@ -202,7 +230,7 @@
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:48px;">
       <sc-for list="{{ team }}" as="m" hint-placeholder-count="3">
         <article>
-          <image-slot id="{{ m.slotId }}" shape="rounded" radius="4" placeholder="{{ m.photoLabel }}" style="width:100%;height:320px;margin-bottom:22px;"></image-slot>
+          <image-slot id="{{ m.slotId }}" shape="rounded" radius="4" src="{{ m.photo }}" placeholder="{{ m.photoLabel }}" style="width:100%;height:320px;margin-bottom:22px;"></image-slot>
           <h3 style="font-family:'Mulish',sans-serif;color:#101828;font-size:21px;line-height:1.15;font-weight:800;margin:0 0 4px;">{{ m.name }}</h3>
           <p style="color:#F72330;font-size:13px;font-weight:600;letter-spacing:0.03em;margin:0 0 14px;">{{ m.role }}</p>
           <p style="color:#5a6270;font-size:14px;line-height:1.65;margin:0 0 10px;white-space:pre-line;">{{ m.tags }}</p>
@@ -214,26 +242,33 @@
 </section>
 
 <!-- SEÇÃO 8 — DEPOIMENTOS -->
-<section aria-label="Depoimentos" ref="{{ refTestimonials }}" style="{{ revealTestimonials }}background:#101828;padding:100px 0;">
-  <div style="max-width:1200px;margin:0 auto;padding:0 clamp(20px,5vw,56px);">
-    <div style="max-width:640px;margin:0 auto 48px;text-align:center;">
-      <div style="width:40px;height:2px;background:#F72330;margin:0 auto 20px;"></div>
-      <h2 style="font-family:'Mulish',sans-serif;color:#FFFFFF;font-size:clamp(1.8rem,3vw,2.5rem);line-height:1.08;font-weight:800;letter-spacing:-0.01em;margin:0;">O cuidado também é percebido por quem passa por aqui</h2>
+<section aria-label="Depoimentos" ref="{{ refTestimonials }}" style="{{ revealTestimonials }}position:relative;overflow:hidden;background:linear-gradient(135deg,#0B1220 0%,#101828 46%,#151F30 100%);padding:112px 0;border-top:1px solid rgba(255,255,255,0.08);border-bottom:1px solid rgba(255,255,255,0.08);">
+  <div aria-hidden="true" style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(247,35,48,0.12) 0%,transparent 26%,transparent 74%,rgba(255,255,255,0.05) 100%);pointer-events:none;"></div>
+  <div style="position:relative;max-width:1200px;margin:0 auto;padding:0 clamp(20px,5vw,56px);">
+    <div style="max-width:760px;margin:0 auto 56px;text-align:center;">
+      <div style="width:60px;height:3px;background:#F72330;margin:0 auto 22px;"></div>
+      <p style="color:#F72330;font-size:12px;letter-spacing:0.18em;text-transform:uppercase;font-weight:700;margin:0 0 14px;">Depoimentos</p>
+      <h2 style="font-family:'Mulish',sans-serif;color:#FFFFFF;font-size:clamp(2rem,3.6vw,3rem);line-height:1.06;font-weight:800;letter-spacing:-0.01em;margin:0;">O cuidado também é percebido por quem passa por aqui</h2>
+      <p style="color:rgba(255,255,255,0.68);font-size:16px;line-height:1.7;margin:22px auto 0;max-width:620px;">Experiências de quem encontrou acolhimento, clareza e segurança em cada etapa do atendimento.</p>
     </div>
   </div>
-  <div style="position:relative;max-width:1200px;margin:0 auto;padding:0 clamp(20px,5vw,56px);">
-    <div ref="{{ refTrack }}" onMouseEnter="{{ pauseCarousel }}" onMouseLeave="{{ resumeCarousel }}" onFocus="{{ pauseCarousel }}" onBlur="{{ resumeCarousel }}" tabindex="-1" style="display:flex;gap:24px;overflow-x:auto;scroll-snap-type:x mandatory;padding:8px 4px 16px;scrollbar-width:none;">
+  <div style="position:relative;max-width:1240px;margin:0 auto;padding:0 clamp(20px,5vw,56px);">
+    <div class="testimonials-track" ref="{{ refTrack }}" onMouseEnter="{{ pauseCarousel }}" onMouseLeave="{{ resumeCarousel }}" onFocus="{{ pauseCarousel }}" onBlur="{{ resumeCarousel }}" tabindex="-1" style="display:flex;gap:28px;overflow-x:auto;scroll-snap-type:x mandatory;padding:10px 4px 24px;scrollbar-width:none;">
       <sc-for list="{{ testimonials }}" as="d" hint-placeholder-count="5">
-        <div data-card="true" style="flex:0 0 min(84vw,380px);scroll-snap-align:center;background:#151F30;border:1px solid rgba(255,255,255,0.08);border-radius:4px;padding:32px 28px;">
-          <div style="width:28px;height:2px;background:#F72330;margin-bottom:18px;"></div>
-          <p style="font-family:'Newsreader',serif;color:#FFFFFF;font-size:17px;line-height:1.65;font-style:italic;margin:0 0 22px;">{{ d.quote }}</p>
-          <p style="color:rgba(255,255,255,0.55);font-size:14px;margin:0;">{{ d.name }}</p>
+        <div class="testimonial-card" data-card="true" style="position:relative;display:flex;flex-direction:column;flex:0 0 clamp(280px,calc((100% - 56px) / 3),390px);min-height:260px;scroll-snap-align:start;background:linear-gradient(180deg,rgba(255,255,255,0.09),rgba(255,255,255,0.04));border:1px solid rgba(255,255,255,0.14);border-radius:8px;padding:34px 30px 30px;box-shadow:0 24px 60px rgba(0,0,0,0.22);overflow:hidden;" style-hover="transform:translateY(-4px);border-color:rgba(247,35,48,0.45);box-shadow:0 30px 70px rgba(0,0,0,0.28);">
+          <span aria-hidden="true" style="position:absolute;right:28px;top:18px;font-family:'Newsreader',serif;color:rgba(247,35,48,0.22);font-size:74px;line-height:1;">“</span>
+          <div aria-hidden="true" style="color:#F6C453;font-size:14px;letter-spacing:0.18em;margin:0 0 26px;">★★★★★</div>
+          <p style="position:relative;font-family:'Newsreader',serif;color:#FFFFFF;font-size:20px;line-height:1.55;font-style:italic;margin:0 0 30px;">{{ d.quote }}</p>
+          <div style="display:flex;align-items:center;gap:12px;margin-top:auto;">
+            <span aria-hidden="true" style="width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#F72330,#ff7a80);display:inline-flex;align-items:center;justify-content:center;color:#FFFFFF;font-size:14px;font-weight:700;">{{ d.initial }}</span>
+            <p style="color:rgba(255,255,255,0.72);font-size:14px;font-weight:600;margin:0;">{{ d.name }}</p>
+          </div>
         </div>
       </sc-for>
     </div>
-    <div style="display:flex;justify-content:center;gap:14px;margin-top:8px;">
-      <button aria-label="Depoimento anterior" onClick="{{ scrollPrev }}" style="width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,0.25);background:transparent;color:#FFFFFF;display:flex;align-items:center;justify-content:center;font-size:18px;" style-hover="border-color:#F72330;color:#F72330;">‹</button>
-      <button aria-label="Próximo depoimento" onClick="{{ scrollNext }}" style="width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,0.25);background:transparent;color:#FFFFFF;display:flex;align-items:center;justify-content:center;font-size:18px;" style-hover="border-color:#F72330;color:#F72330;">›</button>
+    <div style="display:flex;justify-content:center;gap:14px;margin-top:12px;">
+      <button aria-label="Depoimento anterior" onClick="{{ scrollPrev }}" style="width:50px;height:50px;border-radius:50%;border:1px solid rgba(255,255,255,0.22);background:rgba(255,255,255,0.06);color:#FFFFFF;display:flex;align-items:center;justify-content:center;font-size:22px;box-shadow:0 12px 28px rgba(0,0,0,0.18);" style-hover="border-color:#F72330;background:#F72330;color:#FFFFFF;">‹</button>
+      <button aria-label="Próximo depoimento" onClick="{{ scrollNext }}" style="width:50px;height:50px;border-radius:50%;border:1px solid rgba(255,255,255,0.22);background:rgba(255,255,255,0.06);color:#FFFFFF;display:flex;align-items:center;justify-content:center;font-size:22px;box-shadow:0 12px 28px rgba(0,0,0,0.18);" style-hover="border-color:#F72330;background:#F72330;color:#FFFFFF;">›</button>
     </div>
   </div>
 </section>
@@ -241,21 +276,19 @@
 <!-- SEÇÃO 9 — LOCALIZAÇÃO -->
 <section aria-label="Localização e contato" ref="{{ refLocation }}" style="{{ revealLocation }}background:#F6F6F7;padding:96px clamp(20px,5vw,56px);">
   <div style="max-width:1200px;margin:0 auto;display:flex;flex-wrap:wrap;gap:56px;">
-    <div style="flex:1 1 min(440px,100%);min-width:min(320px,100%);">
+    <div class="location-info" style="flex:1 1 min(440px,100%);min-width:min(320px,100%);">
       <div style="width:40px;height:2px;background:#F72330;margin-bottom:20px;"></div>
       <h2 style="font-family:'Mulish',sans-serif;color:#101828;font-size:clamp(1.8rem,3vw,2.5rem);line-height:1.08;font-weight:800;letter-spacing:-0.01em;margin:0 0 28px;">Dentista no Santa Cruz, em Cascavel</h2>
       <p style="color:#101828;font-weight:600;font-size:16px;margin:0 0 4px;">Odonto Excellence Santa Cruz</p>
       <p style="color:#3d4552;font-size:15px;line-height:1.7;margin:0 0 20px;">Avenida Brasil, 11525, Sala 2<br>Santa Cruz – Cascavel/PR</p>
       <p style="color:#3d4552;font-size:15px;line-height:1.7;margin:0 0 20px;">WhatsApp: (45) 99133-5082</p>
       <p style="color:#3d4552;font-size:15px;line-height:1.7;margin:0 0 20px;">Segunda a sexta: 9h às 20h<br>Sábado: 8h às 12h</p>
-      <p style="color:#3d4552;font-size:15px;line-height:1.7;margin:0 0 32px;"><a href="https://www.instagram.com/odontoexcellence.santacruz/" target="_blank" rel="noopener">@odontoexcellence.santacruz</a></p>
-      <div style="display:flex;flex-wrap:wrap;gap:14px;">
+      <div class="location-actions" style="display:flex;flex-wrap:wrap;gap:14px;">
         <a href="{{ waLinkDefault }}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:10px;background:#25D366;color:#FFFFFF;font-weight:600;font-size:15px;padding:14px 26px;border-radius:10px;" style-hover="background:#1fb959;">{{ waIcon }} Agendar avaliação</a>
-        <a href="{{ mapsLink }}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:8px;color:#101828;font-weight:600;font-size:15px;padding:14px 8px;border-bottom:2px solid #F72330;">Ver localização</a>
       </div>
     </div>
     <div style="flex:1 1 min(440px,100%);min-width:min(300px,100%);">
-      <image-slot id="mapa-preview" shape="rounded" radius="4" placeholder="Prévia do mapa — carregado sob interação" style="width:100%;height:min(420px,70vw);"></image-slot>
+      <iframe title="Mapa da Odonto Excellence Santa Cruz" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3617.3820406842638!2d-53.5020588!3d-24.953113300000002!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94f3d17ed79b8517%3A0xb7d9c8b6637e4bb9!2sOdonto%20Excellence%20Cascavel%2C%20Santa%20Cruz%20%7C%20Dentista!5e0!3m2!1spt-BR!2sbr!4v1788960900623!5m2!1spt-BR!2sbr" width="600" height="450" style="border:0;width:100%;height:min(420px,70vw);border-radius:4px;display:block;box-shadow:0 24px 60px rgba(16,24,40,0.14);" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
     </div>
   </div>
 </section>
@@ -298,9 +331,9 @@
 <!-- FOOTER -->
 <footer style="background:#101828;padding:56px clamp(20px,5vw,56px) 32px;">
   <div style="max-width:1200px;margin:0 auto;">
-    <div style="display:flex;flex-wrap:wrap;gap:40px;justify-content:space-between;margin-bottom:36px;">
+    <div class="footer-columns" style="display:flex;flex-wrap:wrap;gap:40px;justify-content:space-between;margin-bottom:36px;">
       <div style="flex:1 1 240px;">
-        <div style="background:#FFFFFF;display:inline-block;padding:8px 14px;border-radius:6px;margin-bottom:16px;"><img src="assets/logo-odonto-excellence.png" alt="Odonto Excellence" style="height:26px;width:auto;display:block;"></div>
+        <div class="footer-logo" style="background:#FFFFFF;display:inline-block;padding:8px 14px;border-radius:6px;margin-bottom:16px;"><img src="assets/logo-odonto-excellence.png" alt="Odonto Excellence" style="height:26px;width:auto;display:block;"></div>
         <p style="color:rgba(255,255,255,0.6);font-size:13px;line-height:1.7;margin:0;">Avenida Brasil, 11525, Sala 2<br>Santa Cruz – Cascavel/PR</p>
       </div>
       <div style="flex:1 1 200px;">
@@ -316,8 +349,8 @@
         <p style="color:rgba(255,255,255,0.6);font-size:13px;line-height:1.9;margin:0;">Segunda a sexta: 9h às 20h<br>Sábado: 8h às 12h</p>
       </div>
     </div>
-    <div style="border-top:1px solid rgba(255,255,255,0.1);padding-top:24px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;">
-      <p style="color:rgba(255,255,255,0.45);font-size:12px;line-height:1.7;margin:0;max-width:600px;">Odonto Excellence Santa Cruz • CNPJ 62.658.667/0001-33<br>Responsável Técnico: Maurício Malacarne Thomazi — CRO-PR 28378</p>
+    <div class="footer-bottom" style="border-top:1px solid rgba(255,255,255,0.1);padding-top:24px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;">
+      <p style="color:rgba(255,255,255,0.45);font-size:12px;line-height:1.7;margin:0;max-width:600px;">Odonto Excellence Santa Cruz • CNPJ 62.658.667/0001-33</p>
       <div style="text-align:right;">
         <p style="color:rgba(255,255,255,0.45);font-size:12px;margin:0;">© {{ year }} Odonto Excellence Santa Cruz. Todos os direitos reservados.</p>
         <p style="color:rgba(255,255,255,0.45);font-size:12px;margin:4px 0 0;">Desenvolvido por SuperDental®</p>
@@ -342,8 +375,8 @@
       <div style="width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,#F72330,#ff8a8f);display:flex;align-items:center;justify-content:center;margin:4px auto 22px;box-shadow:0 10px 24px rgba(247,35,48,0.35);">
         {{ particularIcon }}
       </div>
-      <p style="font-family:'Work Sans',sans-serif;color:#101828;font-size:20px;font-weight:700;letter-spacing:-0.01em;margin:0 0 12px;">Atendimento 100% particular</p>
-      <p style="color:#5a6270;font-size:14.5px;line-height:1.65;margin:0 0 28px;">A Odonto Excellence Santa Cruz não trabalha com convênios ou planos odontológicos. Todo cuidado é conduzido de forma individual e humanizada, do início ao fim.</p>
+      <p style="font-family:'Work Sans',sans-serif;color:#101828;font-size:20px;font-weight:700;letter-spacing:-0.01em;margin:0 0 12px;">Atendimento particular</p>
+      <p style="color:#5a6270;font-size:14.5px;line-height:1.65;margin:0 0 28px;">A Odonto Excellence Santa Cruz não trabalha com convênios ou planos odontológicos.</p>
       <div style="display:flex;flex-direction:column;gap:10px;">
         <button onClick="{{ closePopup }}" style="background:#101828;color:#FFFFFF;font-size:14px;font-weight:600;border:none;border-radius:12px;padding:14px 20px;" style-hover="background:#1c283b;">Entendi</button>
       </div>
@@ -490,32 +523,41 @@ class Component extends DCLogic {
     ];
 
     const treatmentsData = [
-      ['Clínica Geral', 'Cuidados de rotina, diagnóstico e acompanhamento da saúde bucal no dia a dia.'],
-      ['Ortodontia', 'Alinhamento dos dentes com aparelhos indicados de acordo com cada caso.'],
-      ['Implantes', 'Reposição de dentes ausentes, quando indicado após avaliação individual.'],
-      ['Prótese', 'Reabilitação de dentes perdidos ou desgastados, conforme a necessidade do paciente.'],
-      ['Prótese Protocolo', 'Solução fixa sobre implantes para arcadas desdentadas, após avaliação.'],
-      ['Endodontia', 'Tratamento do interior do dente para preservar sua estrutura, quando indicado.'],
-      ['Clareamento', 'Procedimento estético para uniformizar a cor dos dentes, avaliado caso a caso.'],
-      ['Lentes e Facetas', 'Ajustes estéticos no sorriso, indicados após análise individual.'],
-      ['Odontopediatria', 'Acompanhamento odontológico voltado para crianças, com cuidado e paciência.'],
-      ['DTM', 'Avaliação de dores e disfunções relacionadas à articulação temporomandibular.'],
-      ['Aparelhos Invisíveis', 'Alinhamento estético e discreto, quando indicado para o caso.'],
-      ['Harmonização', 'Procedimentos complementares ao sorriso, avaliados individualmente.']
+      ['Clínica Geral', 'Cuidados de rotina, diagnóstico e acompanhamento da saúde bucal no dia a dia.', 'assets/004-dentist.svg'],
+      ['Ortodontia', 'Alinhamento dos dentes com aparelhos indicados de acordo com cada caso.', 'assets/009-brace.svg'],
+      ['Implantes', 'Reposição de dentes ausentes, quando indicado após avaliação individual.', 'assets/007-prosthesis.svg'],
+      ['Prótese', 'Reabilitação de dentes perdidos ou desgastados, conforme a necessidade do paciente.', 'assets/015-denture-2.svg'],
+      ['Prótese Protocolo', 'Solução fixa sobre implantes para arcadas desdentadas, após avaliação.', 'assets/010-smile.svg'],
+      ['Endodontia', 'Tratamento do interior do dente para preservar sua estrutura, quando indicado.', 'assets/063-tooth-21.svg'],
+      ['Clareamento', 'Procedimento estético para uniformizar a cor dos dentes, avaliado caso a caso.', 'assets/008-white-teeth.svg'],
+      ['Lentes e Facetas', 'Ajustes estéticos no sorriso, indicados após análise individual.', 'assets/018-dental-4.svg'],
+      ['Odontopediatria', 'Acompanhamento odontológico voltado para crianças, com cuidado e paciência.', 'assets/012-boy.svg'],
+      ['DTM', 'Avaliação de dores e disfunções relacionadas à articulação temporomandibular.', 'assets/093-tooth-12.svg'],
+      ['Aparelhos Invisíveis', 'Alinhamento estético e discreto, quando indicado para o caso.', 'assets/008-lips.svg'],
+      ['Harmonização', 'Procedimentos complementares ao sorriso, avaliados individualmente.', 'assets/015-doctor-3.svg']
     ];
 
     const stepsData = [
       ['01', 'Conversa', 'Entendemos sua queixa, histórico e o que você espera do tratamento.'],
-      ['02', 'Avaliação', 'A equipe realiza uma análise individualizada da saúde bucal e identifica necessidades que merecem atenção.'],
-      ['03', 'Planejamento', 'As possibilidades de tratamento são explicadas de maneira clara para que as decisões sejam tomadas com segurança.']
+      ['02', 'Avaliação', 'Análise individualizada para identificação das necessidades que merecem atenção.'],
+      ['03', 'Planejamento', 'As possibilidades de tratamento são explicadas de maneira clara e objetiva.']
     ];
 
-    const testimonialsData = [1, 2, 3, 4, 5].map((n) => ({ quote: 'Depoimento será inserido aqui.', name: 'Nome do paciente' }));
+    const testimonialsData = [
+      { quote: 'Ótimo atendimento, profissionais especializados, atenciosos desde a recepção até o dentista, muito cuidado com o paciente, sempre estarei indicando!', name: 'Alexandra Bittencourt', initial: 'A' },
+      { quote: 'Todo muito bem. Muito obrigada', name: 'Yaneisis González Blanco', initial: 'Y' },
+      { quote: 'Atendimento muito bom, equipe super atenciosa e flexível. Recomendo muito!!', name: 'shopp', initial: 'S' },
+      { quote: 'Muito atenciosos e cuidadosos, meu filho de 3 anos adorou.', name: 'Cassia Gonçalves', initial: 'C' },
+      { quote: 'Atendimento Excelente', name: 'Jorge Araujo', initial: 'J' },
+      { quote: 'Foi muito top tudo bem com delicadeza', name: 'DREAM ELOST FF', initial: 'D' },
+      { quote: 'Atendimento personalizado e música boa', name: 'Sidney Thomé', initial: 'S' },
+      { quote: 'Trabalho excelente, ótimo atendimento 💗', name: 'jose antonio hernandez valles', initial: 'J' }
+    ];
 
     const teamData = [
-      { slotId: 'team-carlos', photoLabel: 'Foto de Carlos Wilson — assets/carlos-wilson.webp', name: 'Carlos Wilson', role: 'Cirurgião-Dentista', tags: 'Clínica Geral · Endodontia · Ortodontia · Cirurgia Odontológica', bio: 'Atendimento individualizado, humanizado e pautado na segurança, ética e excelência profissional. Seu trabalho busca unir conhecimento, precisão e cuidado, considerando saúde, função e estética do sorriso.' },
-      { slotId: 'team-mauricio', photoLabel: 'Foto de Maurício Malacarne Thomazi — assets/mauricio-thomazi.webp', name: 'Maurício Malacarne Thomazi', role: 'Cirurgião-Dentista · Responsável Técnico CRO-PR 28378', tags: 'Ortodontia · Implantodontia', bio: 'O atendimento começa pela conversa. Antes de qualquer procedimento, Maurício busca ouvir com atenção o que o paciente traz, criando um espaço de confiança para que as decisões sobre o tratamento sejam tomadas com segurança e tranquilidade.' },
-      { slotId: 'team-gabriel', photoLabel: 'Foto de Gabriel Cherubim — assets/gabriel-cherubim.webp', name: 'Gabriel Cherubim', role: 'Cirurgião-Dentista', tags: 'Em especialização: Prótese · Dentística · Endodontia', bio: 'Gabriel trabalha com avaliação detalhada e individualizada de cada paciente, buscando entender o problema atual, as causas relacionadas a ele e os fatores que podem favorecer sua recorrência — preservando a saúde bucal a longo prazo.' }
+      { slotId: 'team-carlos', photo: 'assets/carlos.webp', photoLabel: 'Foto de Carlos Wilson — assets/carlos.webp', name: 'Carlos Wilson', role: 'Cirurgião-Dentista', tags: 'Clínica Geral · Endodontia · Ortodontia · Cirurgia Odontológica', bio: 'Atendimento individualizado, humanizado e pautado na segurança, ética e excelência profissional. Seu trabalho busca unir conhecimento, precisão e cuidado, considerando saúde, função e estética do sorriso.' },
+      { slotId: 'team-mauricio', photo: 'assets/mauricio.webp', photoLabel: 'Foto de Maurício Malacarne Thomazi — assets/mauricio.webp', name: 'Maurício Malacarne Thomazi', role: 'Cirurgião-Dentista', tags: 'Ortodontia · Implantodontia', bio: 'O atendimento começa pela conversa. Antes de qualquer procedimento, Maurício busca ouvir com atenção o que o paciente traz, criando um espaço de confiança para que as decisões sobre o tratamento sejam tomadas com segurança e tranquilidade.' },
+      { slotId: 'team-gabriel', photo: 'assets/gabriel.webp', photoLabel: 'Foto de Gabriel Cherubim — assets/gabriel.webp', name: 'Gabriel Cherubim', role: 'Cirurgião-Dentista', tags: 'Prótese · Dentística · Endodontia', bio: 'Gabriel trabalha com avaliação detalhada e individualizada de cada paciente, buscando entender o problema atual, as causas relacionadas a ele e os fatores que podem favorecer sua recorrência — preservando a saúde bucal a longo prazo.' }
     ];
 
     const faqData = [
@@ -558,11 +600,11 @@ class Component extends DCLogic {
       scrollPrev: this.scrollPrev,
       scrollNext: this.scrollNext,
       infoItems: [
-        { icon: infoIcons[0], label: 'Atendimento individualizado' },
-        { icon: infoIcons[1], label: 'Clínica no Santa Cruz em Cascavel' },
-        { icon: infoIcons[2], label: 'Segunda a sexta, das 9h às 20h' }
+        { icon: infoIcons[0], label: 'Atendimento individualizado', desc: 'Escuta atenta desde a primeira avaliação' },
+        { icon: infoIcons[1], label: 'Clínica no Santa Cruz em Cascavel', desc: 'Localização prática na Avenida Brasil' },
+        { icon: infoIcons[2], label: 'Segunda a sexta, das 9h às 20h', desc: 'Horários pensados para a sua rotina' }
       ],
-      treatments: treatmentsData.map(([title, desc]) => ({ title, desc })),
+      treatments: treatmentsData.map(([title, desc, icon]) => ({ title, desc, icon })),
       steps: stepsData.map(([num, title, desc]) => ({ num, title, desc })),
       testimonials: testimonialsData,
       team: teamData,
