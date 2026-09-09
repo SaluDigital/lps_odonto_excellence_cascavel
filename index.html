@@ -43,6 +43,10 @@
       .hero-copy a { max-width:100%; justify-content:center; padding:14px 18px !important; font-size:14px !important; }
       .hero-copy img { max-width:100%; height:30px !important; }
       .process-section { background-position:center,right center !important; }
+      .popup-overlay { align-items:flex-end !important; padding:16px !important; }
+      .popup-card { max-width:none !important; max-height:calc(100dvh - 32px) !important; border-radius:18px !important; padding:34px 22px 24px !important; overflow:auto !important; }
+      .popup-card-title { font-size:19px !important; }
+      .popup-card-text { font-size:14px !important; }
     }
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
@@ -368,15 +372,15 @@
 
 <!-- POPUP ATENDIMENTO PARTICULAR -->
 <sc-if value="{{ showPopupToast }}" hint-placeholder-val="{{ false }}">
-  <div role="presentation" onClick="{{ closePopup }}" style="position:fixed;inset:0;z-index:100;background:rgba(16,24,40,0.62);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;padding:20px;{{ popupOverlayAnim }}">
-    <div role="dialog" aria-modal="true" aria-label="Atendimento particular" onClick="{{ stopPropagation }}" style="position:relative;width:100%;max-width:400px;background:#FFFFFF;border-radius:20px;box-shadow:0 30px 70px rgba(16,24,40,0.4);padding:38px 32px 32px;text-align:center;overflow:hidden;{{ popupCardAnim }}">
+  <div class="popup-overlay" role="presentation" onClick="{{ closePopup }}" style="position:fixed;inset:0;z-index:100;background:rgba(16,24,40,0.62);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;padding:20px;{{ popupOverlayAnim }}">
+    <div class="popup-card" role="dialog" aria-modal="true" aria-label="Atendimento particular" onClick="{{ stopPropagation }}" style="position:relative;width:100%;max-width:400px;background:#FFFFFF;border-radius:20px;box-shadow:0 30px 70px rgba(16,24,40,0.4);padding:38px 32px 32px;text-align:center;overflow:hidden;{{ popupCardAnim }}">
       <div style="position:absolute;top:0;left:0;right:0;height:6px;background:linear-gradient(90deg,#F72330,#ff7a80);"></div>
       <button aria-label="Fechar aviso" onClick="{{ closePopup }}" style="position:absolute;top:16px;right:16px;width:32px;height:32px;border-radius:50%;background:#F6F6F7;border:none;color:#5a6270;font-size:15px;line-height:1;display:flex;align-items:center;justify-content:center;" style-hover="background:#EDEDEE;color:#101828;">✕</button>
       <div style="width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,#F72330,#ff8a8f);display:flex;align-items:center;justify-content:center;margin:4px auto 22px;box-shadow:0 10px 24px rgba(247,35,48,0.35);">
         {{ particularIcon }}
       </div>
-      <p style="font-family:'Work Sans',sans-serif;color:#101828;font-size:20px;font-weight:700;letter-spacing:-0.01em;margin:0 0 12px;">Atendimento particular</p>
-      <p style="color:#5a6270;font-size:14.5px;line-height:1.65;margin:0 0 28px;">A Odonto Excellence Santa Cruz não trabalha com convênios ou planos odontológicos.</p>
+      <p class="popup-card-title" style="font-family:'Work Sans',sans-serif;color:#101828;font-size:20px;font-weight:700;letter-spacing:-0.01em;margin:0 0 12px;">Atendimento particular</p>
+      <p class="popup-card-text" style="color:#5a6270;font-size:14.5px;line-height:1.65;margin:0 0 28px;">A Odonto Excellence Santa Cruz não trabalha com convênios ou planos odontológicos.</p>
       <div style="display:flex;flex-direction:column;gap:10px;">
         <button onClick="{{ closePopup }}" style="background:#101828;color:#FFFFFF;font-size:14px;font-weight:600;border:none;border-radius:12px;padding:14px 20px;" style-hover="background:#1c283b;">Entendi</button>
       </div>
@@ -431,6 +435,7 @@ class Component extends DCLogic {
     this.resumeCarousel = () => { this._paused = false; };
     this.closePopup = this.closePopup.bind(this);
     this.stopPropagation = (e) => { if (e && e.stopPropagation) e.stopPropagation(); };
+    this.handleVisibility = () => { this._paused = document.hidden; };
 
     this.toggleFaq = {};
     for (let i = 0; i < 8; i++) {
@@ -457,13 +462,13 @@ class Component extends DCLogic {
       }, 5500);
       document.addEventListener('visibilitychange', this.handleVisibility);
     }
-    if (!(typeof window !== 'undefined' && window.sessionStorage && window.sessionStorage.getItem('oe_popup_shown')) && this.props.showPopup !== false) {
+    const popupStorageKey = typeof window !== 'undefined' && window.innerWidth <= 640 ? 'oe_popup_shown_mobile' : 'oe_popup_shown_desktop';
+    if (!(typeof window !== 'undefined' && window.sessionStorage && window.sessionStorage.getItem(popupStorageKey)) && this.props.showPopup !== false) {
       setTimeout(() => {
         this.setState({ popupVisible: true });
-        try { window.sessionStorage.setItem('oe_popup_shown', '1'); } catch (e) {}
+        try { window.sessionStorage.setItem(popupStorageKey, '1'); } catch (e) {}
       }, 5000);
     }
-    this.handleVisibility = () => { this._paused = document.hidden; };
   }
 
   componentWillUnmount() {
