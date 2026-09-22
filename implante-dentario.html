@@ -596,16 +596,15 @@ class Component extends DCLogic {
     const treatmentSlot = document.getElementById('planejamento-ortodontico');
     const treatmentImg = treatmentSlot && treatmentSlot.shadowRoot && treatmentSlot.shadowRoot.querySelector('img');
     if (treatmentImg) treatmentImg.addEventListener('load', this.applyTreatmentImageCrop);
-    const popupStorageKey = typeof window !== 'undefined' && window.innerWidth <= 640 ? 'oe_popup_shown_mobile' : 'oe_popup_shown_desktop';
-    if (!(typeof window !== 'undefined' && window.sessionStorage && window.sessionStorage.getItem(popupStorageKey)) && this.props.showPopup !== false) {
-      setTimeout(() => {
+    if (this.props.showPopup !== false) {
+      this._popupTimer = setTimeout(() => {
         this.setState({ popupVisible: true });
-        try { window.sessionStorage.setItem(popupStorageKey, '1'); } catch (e) {}
       }, 5000);
     }
   }
 
   componentWillUnmount() {
+    if (this._popupTimer) clearTimeout(this._popupTimer);
     if (this._autoplayId) clearInterval(this._autoplayId);
     if (this._observer) this._observer.disconnect();
     document.removeEventListener('visibilitychange', this.handleVisibility);
